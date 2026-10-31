@@ -1,0 +1,990 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#5946a8">
+<title>TKA Bahasa Indonesia Kelas IX | Belajar Interaktif</title>
+
+<!-- External CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<script>
+tailwind.config = {
+ theme:{
+  extend:{
+   colors:{
+    purple:{50:'#f5f2ff',100:'#eae4ff',500:'#8066d9',600:'#6950be',700:'#5946a8'},
+    coral:'#ff8d83',mint:'#b8ead9',yellow:'#ffe69a'
+   }
+  }
+ }
+}
+</script>
+
+<style>
+:root{
+ --purple:#6950be;
+ --dark:#292344;
+ --bg:#f7f5ff;
+ --coral:#ff8d83;
+ --mint:#b8ead9;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;background:var(--bg);color:var(--dark);
+ font-family:'Nunito',sans-serif;
+}
+button,input,textarea{font-family:inherit}
+button{cursor:pointer}
+.app-header{
+ background:rgba(255,255,255,.96);
+ backdrop-filter:blur(12px);
+ border-bottom:1px solid #eee9ff;
+ position:sticky;top:0;z-index:50;
+}
+.brand{font-family:'Poppins',sans-serif}
+.nav-btn{
+ padding:10px 15px;border-radius:13px;
+ font-weight:800;font-size:13px;white-space:nowrap;
+ transition:.2s;
+}
+.nav-btn:hover,.nav-btn.active{
+ background:#eee8ff;color:var(--purple);
+}
+.panel{
+ background:white;border:1px solid #eee9f9;
+ border-radius:24px;
+ box-shadow:0 7px 24px rgba(67,49,120,.055);
+}
+.btn-primary{
+ background:var(--purple);color:white;
+ padding:13px 23px;border-radius:15px;
+ font-weight:900;transition:.2s;
+ box-shadow:0 5px 0 #493795;
+}
+.btn-primary:hover{transform:translateY(-2px)}
+.btn-primary:active{transform:translateY(3px);box-shadow:none}
+.btn-soft{
+ background:#eee9ff;color:#5946a8;
+ padding:11px 17px;border-radius:13px;font-weight:900;
+}
+.btn-soft:hover{background:#dfd5ff}
+.section{display:none;animation:fade .35s ease}
+.section.active{display:block}
+@keyframes fade{
+ from{opacity:0;transform:translateY(10px)}
+ to{opacity:1;transform:translateY(0)}
+}
+.card{
+ background:white;border:1px solid #eee9f9;
+ border-radius:21px;padding:22px;
+ transition:.25s;
+}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 25px #5946a817}
+.icon-box{
+ width:49px;height:49px;border-radius:16px;
+ display:grid;place-items:center;font-size:21px;
+}
+.hero{
+ background:linear-gradient(120deg,#5e4aaf,#8974d9 60%,#b9a8f2);
+ color:white;border-radius:30px;overflow:hidden;
+ position:relative;
+}
+.hero:after{
+ content:"";position:absolute;width:280px;height:280px;
+ background:#ffffff15;border-radius:50%;
+ right:-70px;top:-100px;
+}
+.hero:before{
+ content:"";position:absolute;width:180px;height:180px;
+ background:#ffffff12;border-radius:50%;
+ right:160px;bottom:-120px;
+}
+.hero-content{position:relative;z-index:2}
+.tab{
+ padding:11px 17px;border-radius:13px;
+ background:#f4f1ff;color:#6852b5;
+ font-weight:900;font-size:13px;
+}
+.tab.active{background:var(--purple);color:white}
+.content-tab{display:none}
+.content-tab.active{display:block;animation:fade .3s}
+.answer-option{
+ display:flex;align-items:flex-start;gap:12px;
+ width:100%;text-align:left;padding:14px;
+ border:2px solid #eee9f7;border-radius:15px;
+ margin-top:10px;background:white;transition:.2s;
+ font-weight:700;
+}
+.answer-option:hover{border-color:#a18ae7;background:#faf8ff}
+.answer-option.correct{border-color:#35b78c;background:#eafaf3;color:#187d5c}
+.answer-option.wrong{border-color:#f17b7b;background:#fff0f0;color:#ba4242}
+.option-letter{
+ min-width:28px;height:28px;border-radius:9px;
+ background:#eee9ff;color:#5946a8;
+ display:grid;place-items:center;font-weight:900;
+}
+.feedback{
+ padding:14px;border-radius:14px;margin-top:15px;
+ background:#f1efff;border-left:4px solid var(--purple);
+ line-height:1.7;
+}
+.progress-track{height:10px;background:#eee9f9;border-radius:20px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#8066d9,#ff9d91);transition:.3s}
+.sticky-note{
+ background:#fff1a9;padding:17px;border-radius:5px 5px 18px 5px;
+ box-shadow:3px 5px 12px #00000012;
+ transform:rotate(-1deg);min-height:135px;
+}
+.sticky-note:nth-child(even){background:#d9f5e9;transform:rotate(1deg)}
+.sticky-note:nth-child(3n){background:#ffe1df;transform:rotate(-2deg)}
+.flip-card{perspective:1000px;min-height:205px;cursor:pointer}
+.flip-inner{
+ position:relative;width:100%;height:205px;
+ transition:transform .6s;transform-style:preserve-3d;
+}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{
+ position:absolute;inset:0;backface-visibility:hidden;
+ border-radius:20px;padding:24px;
+ display:flex;align-items:center;justify-content:center;
+ flex-direction:column;text-align:center;
+}
+.flip-front{background:#eee9ff;color:#5946a8}
+.flip-back{background:#dcf7eb;transform:rotateY(180deg);color:#246b51}
+.quiz-choice{display:block}
+.quiz-choice:disabled{cursor:default}
+.certificate{
+ border:9px double #8066d9;padding:35px;text-align:center;
+ background:linear-gradient(135deg,#fff,#faf6ff);
+}
+.certificate h2{font-family:'Poppins',sans-serif}
+#toast{
+ position:fixed;bottom:20px;right:20px;
+ z-index:100;background:#292344;color:white;
+ padding:13px 20px;border-radius:13px;
+ opacity:0;pointer-events:none;transition:.3s;
+}
+#toast.show{opacity:1}
+@media(max-width:640px){
+ .hero{border-radius:22px}
+ .hero h1{font-size:30px}
+ .panel{border-radius:19px}
+ .card{padding:17px}
+}
+@media print{
+ body *{visibility:hidden}
+ #certificateArea,#certificateArea *{visibility:visible}
+ #certificateArea{position:absolute;left:0;top:0;width:100%}
+ .no-print{display:none!important}
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="app-header">
+ <div class="max-w-7xl mx-auto px-4 py-3">
+  <div class="flex items-center justify-between gap-3 flex-wrap">
+   <div class="flex items-center gap-3">
+    <div class="w-11 h-11 rounded-2xl bg-purple-600 text-white grid place-items-center text-xl">
+     <i class="fa-solid fa-book-open"></i>
+    </div>
+    <div>
+     <div class="brand font-black text-purple-700 text-sm sm:text-base">LITERASI CANGGIH</div>
+     <div class="text-xs font-bold text-gray-500">TKA Bahasa Indonesia • Kelas IX</div>
+    </div>
+   </div>
+   <div class="flex items-center gap-2">
+    <button onclick="go('home')" class="btn-soft text-xs">
+     <i class="fa-solid fa-house"></i> <span class="hidden sm:inline">Menu Utama</span>
+    </button>
+    <button onclick="toggleAudio()" id="audioBtn" class="btn-soft text-xs">
+     <i class="fa-solid fa-volume-high"></i> AUDIO ON
+    </button>
+   </div>
+  </div>
+  <nav class="flex gap-1 overflow-x-auto pt-3 pb-1" id="mainNav">
+   <button class="nav-btn active" data-page="home" onclick="go('home')">🏠 Home</button>
+   <button class="nav-btn" data-page="tujuan" onclick="go('tujuan')">🎯 Tujuan</button>
+   <button class="nav-btn" data-page="pemantik" onclick="go('pemantik')">💡 Pemantik</button>
+   <button class="nav-btn" data-page="materi" onclick="go('materi')">📚 Materi</button>
+   <button class="nav-btn" data-page="simulasi" onclick="go('simulasi')">🔬 Simulasi</button>
+   <button class="nav-btn" data-page="kuis" onclick="go('kuis')">🏆 Kuis</button>
+   <button class="nav-btn" data-page="games" onclick="go('games')">🎮 Games</button>
+   <button class="nav-btn" data-page="kesimpulan" onclick="go('kesimpulan')">📝 Kesimpulan</button>
+   <button class="nav-btn" data-page="refleksi" onclick="go('refleksi')">💬 Refleksi</button>
+  </nav>
+ </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-7">
+
+<!-- HOME -->
+<section id="home" class="section active">
+ <div class="hero p-7 md:p-12 mb-8">
+  <div class="hero-content grid md:grid-cols-2 gap-8 items-center">
+   <div>
+    <div class="inline-flex gap-2 items-center bg-white/20 px-4 py-2 rounded-full text-xs font-black mb-5">
+     <i class="fa-solid fa-star text-yellow-300"></i> TKA • LITERASI • BERPIKIR KRITIS
+    </div>
+    <h1 class="text-4xl md:text-5xl font-black leading-tight mb-4">
+     Membaca Cerita,<br>Menebak Masa Depan!
+    </h1>
+    <p class="text-white/90 leading-relaxed mb-7">
+     Yuk, jadi detektif cerita! Pelajari cara memprediksi peristiwa
+     dan memahami perasaan tokoh melalui petunjuk dalam teks fiksi.
+    </p>
+    <button onclick="go('tujuan')" class="bg-yellow-300 text-purple-900 font-black px-7 py-4 rounded-2xl hover:scale-105 transition">
+     MULAI BELAJAR <i class="fa-solid fa-arrow-right ml-2"></i>
+    </button>
+   </div>
+   <div class="text-center">
+    <img src="https://i.ibb.co.com/hFJHmgp2/Desain-tanpa-judul-9.png"
+     alt="Ilustrasi belajar interaktif"
+     class="w-full max-w-md mx-auto rounded-3xl object-contain drop-shadow-xl"
+     onerror="this.style.display='none';document.getElementById('heroFallback').style.display='block'">
+    <div id="heroFallback" style="display:none" class="text-8xl py-10">📖 🔎 💭</div>
+   </div>
+  </div>
+ </div>
+
+ <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+  <div class="card text-center"><div class="text-3xl mb-2">📚</div><b>Belajar</b><p class="text-xs text-gray-500 mt-1">Materi interaktif</p></div>
+  <div class="card text-center"><div class="text-3xl mb-2">🔬</div><b>Eksplorasi</b><p class="text-xs text-gray-500 mt-1">Simulasi cerita</p></div>
+  <div class="card text-center"><div class="text-3xl mb-2">🏆</div><b>Tantangan</b><p class="text-xs text-gray-500 mt-1">Kuis 3 level</p></div>
+  <div class="card text-center"><div class="text-3xl mb-2">🎮</div><b>Bermain</b><p class="text-xs text-gray-500 mt-1">Games literasi</p></div>
+ </div>
+
+ <h2 class="text-xl font-black mb-4">🚀 Jelajahi Menu Belajar</h2>
+ <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+  <div class="card cursor-pointer" onclick="go('tujuan')"><div class="icon-box bg-purple-100 mb-3">🎯</div><b>Tujuan Pembelajaran</b><p class="text-sm text-gray-500 mt-1">Kenali target belajarmu.</p></div>
+  <div class="card cursor-pointer" onclick="go('pemantik')"><div class="icon-box bg-yellow-100 mb-3">💡</div><b>Pertanyaan Pemantik</b><p class="text-sm text-gray-500 mt-1">Bangun rasa ingin tahu.</p></div>
+  <div class="card cursor-pointer" onclick="go('materi')"><div class="icon-box bg-green-100 mb-3">📖</div><b>Materi Interaktif</b><p class="text-sm text-gray-500 mt-1">Pelajari konsep utama.</p></div>
+  <div class="card cursor-pointer" onclick="go('simulasi')"><div class="icon-box bg-pink-100 mb-3">🔬</div><b>Simulasi Cerita</b><p class="text-sm text-gray-500 mt-1">Uji kemungkinan peristiwa.</p></div>
+  <div class="card cursor-pointer" onclick="go('kuis')"><div class="icon-box bg-blue-100 mb-3">🏆</div><b>Kuis TKA</b><p class="text-sm text-gray-500 mt-1">Ukur kemampuan literasimu.</p></div>
+  <div class="card cursor-pointer" onclick="go('games')"><div class="icon-box bg-orange-100 mb-3">🎮</div><b>Games Literasi</b><p class="text-sm text-gray-500 mt-1">Belajar sambil bermain.</p></div>
+  <div class="card cursor-pointer" onclick="go('kesimpulan')"><div class="icon-box bg-purple-100 mb-3">📝</div><b>Kesimpulan</b><p class="text-sm text-gray-500 mt-1">Ingat kembali pembelajaran.</p></div>
+  <div class="card cursor-pointer" onclick="go('refleksi')"><div class="icon-box bg-pink-100 mb-3">💬</div><b>Papan Refleksi</b><p class="text-sm text-gray-500 mt-1">Bagikan pengalaman belajar.</p></div>
+ </div>
+
+ <div class="panel p-6 mt-8">
+  <h3 class="font-black text-lg mb-3">🧭 Petunjuk Penggunaan</h3>
+  <div class="grid sm:grid-cols-2 gap-3 text-sm text-gray-600">
+   <p>① Mulailah dari menu tujuan pembelajaran.</p>
+   <p>② Jawab pertanyaan pemantik dengan jujur.</p>
+   <p>③ Pelajari materi dan ikuti simulasi.</p>
+   <p>④ Kerjakan kuis sesuai level kemampuan.</p>
+   <p>⑤ Mainkan games untuk menguji pemahaman.</p>
+   <p>⑥ Tuliskan refleksi pada papan kolaboratif.</p>
+  </div>
+ </div>
+</section>
+
+<!-- TUJUAN -->
+<section id="tujuan" class="section">
+ <div class="mb-6">
+  <span class="text-purple-600 font-black text-sm">01 • LEARNING OBJECTIVES</span>
+  <h2 class="text-3xl font-black mt-2">🎯 Tujuan Pembelajaran</h2>
+  <p class="text-gray-500 mt-2">Apa yang akan kamu kuasai hari ini?</p>
+ </div>
+ <div class="panel p-6 mb-5">
+  <h3 class="font-black text-lg mb-3">Setelah mengikuti pembelajaran, peserta didik mampu:</h3>
+  <div class="space-y-4">
+   <div class="flex gap-4 items-start"><div class="icon-box bg-purple-100">🔎</div><div><b>1. Mengidentifikasi petunjuk cerita</b><p class="text-sm text-gray-500">Menemukan informasi tersurat dan tersirat, hubungan sebab-akibat, serta tindakan tokoh dalam teks fiksi.</p></div></div>
+   <div class="flex gap-4 items-start"><div class="icon-box bg-yellow-100">🔮</div><div><b>2. Memprediksi peristiwa selanjutnya</b><p class="text-sm text-gray-500">Menentukan kemungkinan kelanjutan cerita secara logis berdasarkan rangkaian peristiwa dan bukti tekstual.</p></div></div>
+   <div class="flex gap-4 items-start"><div class="icon-box bg-pink-100">❤️</div><div><b>3. Menyimpulkan respons emosional tokoh</b><p class="text-sm text-gray-500">Menganalisis perasaan tokoh berdasarkan konflik, tindakan, dialog, dan situasi yang dialami.</p></div></div>
+   <div class="flex gap-4 items-start"><div class="icon-box bg-green-100">🧠</div><div><b>4. Menyampaikan alasan berdasarkan bukti</b><p class="text-sm text-gray-500">Menjelaskan prediksi dan simpulan emosi dengan alasan yang relevan, logis, dan didukung isi teks.</p></div></div>
+  </div>
+ </div>
+ <div class="grid md:grid-cols-2 gap-4">
+  <div class="card bg-purple-50"><h3 class="font-black mb-2">🌍 Mengapa penting?</h3><p class="text-sm leading-7">Kemampuan memprediksi dan memahami emosi membantu kita membaca situasi, memahami orang lain, serta mengambil keputusan berdasarkan informasi.</p></div>
+  <div class="card bg-yellow-50"><h3 class="font-black mb-2">💭 Hubungkan dengan pengalamanmu</h3><p class="text-sm leading-7">Pernahkah kamu menebak akhir sebuah film sebelum selesai? Pernahkah kamu mengetahui temanmu sedang kecewa hanya dari sikapnya? Itulah kemampuan yang akan kita latih.</p></div>
+ </div>
+ <button onclick="go('pemantik')" class="btn-primary mt-6">Lanjut ke Pemantik <i class="fa-solid fa-arrow-right ml-2"></i></button>
+</section>
+
+<!-- PEMANTIK -->
+<section id="pemantik" class="section">
+ <span class="text-purple-600 font-black text-sm">02 • THINK AND WONDER</span>
+ <h2 class="text-3xl font-black mt-2 mb-2">💡 Pertanyaan Pemantik</h2>
+ <p class="text-gray-500 mb-6">Tarik napas sejenak. Fokuskan pikiran, kemudian buka kartu berikut.</p>
+ <div class="panel p-5 mb-6 bg-purple-50">
+  <div class="text-3xl mb-2">🧘</div>
+  <b>Aktivitas mindfulness – 30 detik</b>
+  <p class="text-sm text-gray-600 mt-2">Tarik napas perlahan, lepaskan ketegangan, dan bayangkan sebuah cerita yang pernah kamu baca. Apa yang membuatmu penasaran terhadap kelanjutannya?</p>
+  <button class="btn-soft mt-3" onclick="mindful()">Mulai latihan fokus <i class="fa-solid fa-heart"></i></button>
+ </div>
+ <div class="grid md:grid-cols-2 gap-5">
+  <div class="flip-card" onclick="this.classList.toggle('flipped')">
+   <div class="flip-inner">
+    <div class="flip-front"><div class="text-4xl mb-3">🔮</div><b class="text-xl">Kartu Misteri 1</b><p class="text-sm mt-2">Klik untuk membuka pertanyaan</p></div>
+    <div class="flip-back"><b class="text-lg">Jika tokoh utama tiba-tiba menerima surat tanpa nama pengirim, menurutmu apa yang akan terjadi selanjutnya?</b><p class="text-sm mt-3">Petunjuk apa yang kamu perlukan untuk membuat prediksi?</p></div>
+   </div>
+  </div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')">
+   <div class="flip-inner">
+    <div class="flip-front"><div class="text-4xl mb-3">❤️</div><b class="text-xl">Kartu Misteri 2</b><p class="text-sm mt-2">Klik untuk membuka pertanyaan</p></div>
+    <div class="flip-back"><b class="text-lg">Seseorang sudah berlatih berhari-hari, tetapi gagal saat tampil di depan umum. Apa yang mungkin ia rasakan?</b><p class="text-sm mt-3">Peristiwa apa yang menjadi dasar kesimpulanmu?</p></div>
+   </div>
+  </div>
+ </div>
+ <div class="panel p-6 mt-6">
+  <h3 class="font-black mb-2">✍️ Aktivitas awal</h3>
+  <p class="text-sm text-gray-500 mb-3">Tuliskan jawaban singkatmu.</p>
+  <textarea id="warmup" rows="3" class="w-full border-2 border-purple-100 rounded-2xl p-4 outline-none focus:border-purple-400" placeholder="Menurut saya..."></textarea>
+  <button onclick="saveWarmup()" class="btn-primary mt-3">Simpan Jawaban</button>
+ </div>
+</section>
+
+<!-- MATERI -->
+<section id="materi" class="section">
+ <span class="text-purple-600 font-black text-sm">03 • LEARNING CENTER</span>
+ <h2 class="text-3xl font-black mt-2 mb-5">📚 Materi Belajar Interaktif</h2>
+ <div class="flex gap-2 flex-wrap mb-5">
+  <button class="tab active" onclick="materialTab('m1',this)">🔮 Prediksi Cerita</button>
+  <button class="tab" onclick="materialTab('m2',this)">❤️ Respons Emosional</button>
+  <button class="tab" onclick="materialTab('m3',this)">🧩 Strategi TKA</button>
+  <button class="tab" onclick="materialTab('m4',this)">📖 Contoh Analisis</button>
+ </div>
+
+ <div id="m1" class="content-tab active">
+  <div class="panel p-6">
+   <div class="text-5xl mb-3">🔮</div>
+   <h3 class="text-2xl font-black mb-3">A. Memprediksi Peristiwa dalam Teks</h3>
+   <p class="leading-8 text-gray-600">Prediksi cerita adalah perkiraan tentang peristiwa yang mungkin terjadi berikutnya berdasarkan petunjuk yang tersedia dalam teks. Prediksi bukan tebakan sembarangan, melainkan penalaran yang didukung bukti.</p>
+   <h4 class="font-black mt-5 mb-3">Empat langkah membuat prediksi:</h4>
+   <div class="grid sm:grid-cols-2 gap-3">
+    <div class="card bg-purple-50"><b>1. Identifikasi fakta</b><p class="text-sm mt-2">Apa yang sedang terjadi dalam cerita?</p></div>
+    <div class="card bg-yellow-50"><b>2. Temukan petunjuk</b><p class="text-sm mt-2">Perhatikan tindakan, dialog, latar, dan konflik.</p></div>
+    <div class="card bg-green-50"><b>3. Hubungkan sebab-akibat</b><p class="text-sm mt-2">Apa akibat yang paling mungkin dari peristiwa tersebut?</p></div>
+    <div class="card bg-pink-50"><b>4. Rumuskan prediksi</b><p class="text-sm mt-2">Pilih kelanjutan yang paling logis dan didukung teks.</p></div>
+   </div>
+   <div class="feedback mt-5"><b>Ingat!</b> Prediksi terbaik adalah prediksi yang paling masuk akal berdasarkan petunjuk teks, bukan yang paling menarik atau paling dramatis.</div>
+  </div>
+ </div>
+
+ <div id="m2" class="content-tab">
+  <div class="panel p-6">
+   <div class="text-5xl mb-3">❤️</div>
+   <h3 class="text-2xl font-black mb-3">B. Menyimpulkan Respons Emosional Tokoh</h3>
+   <p class="leading-8 text-gray-600">Respons emosional adalah reaksi perasaan tokoh terhadap peristiwa, konflik, atau tindakan yang dialaminya. Perasaan dapat disimpulkan dari dialog, tindakan, ekspresi, dan konteks cerita.</p>
+   <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mt-5">
+    <div class="card text-center bg-pink-50"><div class="text-3xl">😢</div><b>Sedih</b><p class="text-xs mt-1">Kehilangan atau kegagalan</p></div>
+    <div class="card text-center bg-yellow-50"><div class="text-3xl">😨</div><b>Takut</b><p class="text-xs mt-1">Ancaman atau bahaya</p></div>
+    <div class="card text-center bg-green-50"><div class="text-3xl">😊</div><b>Senang</b><p class="text-xs mt-1">Keberhasilan atau kabar baik</p></div>
+    <div class="card text-center bg-purple-50"><div class="text-3xl">😠</div><b>Marah</b><p class="text-xs mt-1">Ketidakadilan atau penghinaan</p></div>
+    <div class="card text-center bg-blue-50"><div class="text-3xl">😔</div><b>Kecewa</b><p class="text-xs mt-1">Harapan tidak tercapai</p></div>
+    <div class="card text-center bg-orange-50"><div class="text-3xl">😲</div><b>Terkejut</b><p class="text-xs mt-1">Peristiwa tidak terduga</p></div>
+   </div>
+   <h4 class="font-black mt-6 mb-3">Rumus analisis emosi</h4>
+   <div class="bg-purple-50 rounded-2xl p-5 text-center font-black text-purple-700">
+    PERISTIWA → PETUNJUK → PERASAAN → ALASAN
+   </div>
+   <p class="text-sm text-gray-600 mt-4">Contoh: Rina menunduk, menggenggam kertas hasil ujian, lalu berkata, "Padahal aku sudah belajar keras." Respons emosionalnya kemungkinan kecewa karena hasil tidak sesuai harapan.</p>
+  </div>
+ </div>
+
+ <div id="m3" class="content-tab">
+  <div class="panel p-6">
+   <h3 class="text-2xl font-black mb-4">C. Strategi Menjawab Soal TKA</h3>
+   <div class="space-y-4">
+    <div class="flex gap-3"><span class="text-2xl">1️⃣</span><div><b>Baca teks secara utuh</b><p class="text-sm text-gray-500">Jangan langsung memilih jawaban dari satu kalimat.</p></div></div>
+    <div class="flex gap-3"><span class="text-2xl">2️⃣</span><div><b>Tandai informasi penting</b><p class="text-sm text-gray-500">Temukan konflik, tokoh, latar, dialog, dan perubahan situasi.</p></div></div>
+    <div class="flex gap-3"><span class="text-2xl">3️⃣</span><div><b>Bedakan fakta dan dugaan</b><p class="text-sm text-gray-500">Prediksi harus berdasarkan bukti, bukan asumsi pribadi.</p></div></div>
+    <div class="flex gap-3"><span class="text-2xl">4️⃣</span><div><b>Eliminasi pilihan yang tidak logis</b><p class="text-sm text-gray-500">Singkirkan jawaban yang bertentangan dengan cerita.</p></div></div>
+    <div class="flex gap-3"><span class="text-2xl">5️⃣</span><div><b>Periksa alasan jawaban</b><p class="text-sm text-gray-500">Pastikan kamu bisa menunjukkan bukti tekstual.</p></div></div>
+   </div>
+  </div>
+ </div>
+
+ <div id="m4" class="content-tab">
+  <div class="panel p-6">
+   <h3 class="text-2xl font-black mb-3">D. Contoh Analisis Cerita</h3>
+   <div class="bg-yellow-50 rounded-2xl p-5 leading-8">
+    <b>Jaket di Tengah Hujan</b><br>
+    Sore itu, Arga berjalan pulang ketika hujan turun semakin deras. Di halte, ia melihat seorang anak kecil menggigil tanpa membawa payung. Arga sebenarnya sedang terburu-buru karena ibunya menunggu di rumah. Ia kemudian melepas jaketnya dan menyampirkannya ke bahu anak itu. Setelah mengantarkan anak tersebut ke warung terdekat, Arga baru melanjutkan perjalanan.
+   </div>
+   <div class="mt-5 space-y-4">
+    <div><b class="text-purple-700">Pertanyaan 1: Apa prediksi yang paling logis?</b><p class="text-sm text-gray-600 mt-2">Arga kemungkinan pulang lebih terlambat, tetapi ia merasa telah membantu anak tersebut. Petunjuk: ia mengantar anak ke tempat yang lebih aman.</p></div>
+    <div><b class="text-purple-700">Pertanyaan 2: Bagaimana respons emosional Arga?</b><p class="text-sm text-gray-600 mt-2">Arga mungkin merasa khawatir terhadap anak itu dan memiliki kepedulian. Petunjuk: ia mengorbankan waktu dan jaketnya untuk membantu.</p></div>
+   </div>
+   <div class="feedback"><b>Analisis penting:</b> Satu peristiwa dapat memunculkan lebih dari satu emosi. Pilih respons yang paling kuat didukung oleh konteks.</div>
+  </div>
+ </div>
+ <button onclick="go('simulasi')" class="btn-primary mt-6">Coba Simulasi <i class="fa-solid fa-arrow-right ml-2"></i></button>
+</section>
+
+<!-- SIMULASI -->
+<section id="simulasi" class="section">
+ <span class="text-purple-600 font-black text-sm">04 • STORY LAB</span>
+ <h2 class="text-3xl font-black mt-2 mb-2">🔬 Laboratorium Prediksi Cerita</h2>
+ <p class="text-gray-500 mb-6">Ubah pilihanmu dan lihat bagaimana kelanjutan cerita dapat berkembang.</p>
+ <div class="panel p-6">
+  <div class="flex justify-between items-center mb-4">
+   <b class="text-lg">📖 Misi: Rahasia Kotak di Perpustakaan</b>
+   <span class="bg-yellow-100 px-3 py-1 rounded-full text-xs font-black">SIMULASI</span>
+  </div>
+  <div class="bg-purple-50 rounded-2xl p-5 leading-8 mb-5">
+   Saat membersihkan perpustakaan sekolah, Dinda menemukan sebuah kotak kayu kecil di bawah meja. Kotak itu terkunci. Di atasnya terdapat tulisan: "Buka ketika semua petunjuk telah ditemukan." Dinda kemudian menemukan tiga lembar foto lama yang menunjukkan lokasi berbeda di sekolah.
+  </div>
+  <h3 class="font-black mb-3">Apa tindakan Dinda yang paling tepat?</h3>
+  <div class="grid sm:grid-cols-2 gap-3">
+   <button onclick="simulate(0)" class="btn-soft text-left">A. Membongkar kotak dengan paksa.</button>
+   <button onclick="simulate(1)" class="btn-soft text-left">B. Mencari lokasi dalam foto untuk menemukan petunjuk berikutnya.</button>
+   <button onclick="simulate(2)" class="btn-soft text-left">C. Membuang kotak karena dianggap tidak penting.</button>
+   <button onclick="simulate(3)" class="btn-soft text-left">D. Membawa kotak pulang tanpa izin.</button>
+  </div>
+  <div id="simulationResult" class="mt-5"></div>
+  <button onclick="resetSimulation()" class="btn-soft mt-4">Ulangi Simulasi</button>
+ </div>
+ <div class="panel p-6 mt-5">
+  <h3 class="font-black mb-3">🧪 Tantangan Eksperimen</h3>
+  <p class="text-sm text-gray-600 mb-3">Pilih perubahan peristiwa, kemudian amati prediksi respons emosional tokoh.</p>
+  <select id="eventSelect" class="w-full p-3 rounded-xl border-2 border-purple-100 mb-3">
+   <option value="berhasil">Tokoh berhasil menemukan sesuatu yang hilang.</option>
+   <option value="gagal">Tokoh gagal dalam lomba yang telah dipersiapkan.</option>
+   <option value="ditolong">Tokoh ditolong oleh seseorang yang tidak dikenal.</option>
+   <option value="dituduh">Tokoh dituduh melakukan kesalahan yang tidak dibuatnya.</option>
+  </select>
+  <button onclick="experiment()" class="btn-primary">Analisis Respons Emosional</button>
+  <div id="experimentResult" class="mt-4"></div>
+ </div>
+</section>
+
+<!-- KUIS -->
+<section id="kuis" class="section">
+ <span class="text-purple-600 font-black text-sm">05 • KNOWLEDGE CHALLENGE</span>
+ <h2 class="text-3xl font-black mt-2 mb-2">🏆 Kuis TKA Bahasa Indonesia</h2>
+ <p class="text-gray-500 mb-6">Pilih tingkat tantangan dan buktikan kemampuan literasimu.</p>
+
+ <div id="quizStart" class="panel p-6">
+  <div class="text-center text-5xl mb-3">🏆</div>
+  <h3 class="text-xl font-black text-center">Siap Menjadi Detektif Literasi?</h3>
+  <p class="text-center text-sm text-gray-500 mt-2 mb-5">10 soal pada setiap level. Bacalah teks dengan cermat sebelum menjawab.</p>
+  <label class="font-bold text-sm">Nama peserta untuk sertifikat</label>
+  <input id="studentName" type="text" placeholder="Contoh: Shaka" class="w-full p-3 border-2 border-purple-100 rounded-xl mt-2 mb-5">
+  <div class="grid md:grid-cols-3 gap-4">
+   <button onclick="startQuiz('mudah')" class="card bg-green-50 text-center hover:border-green-400">
+    <div class="text-4xl">🌱</div><b class="text-lg">LEVEL MUDAH</b><p class="text-sm text-gray-500">Pemahaman dasar</p><span class="text-xs font-black text-green-700">10 SOAL</span>
+   </button>
+   <button onclick="startQuiz('sedang')" class="card bg-yellow-50 text-center hover:border-yellow-400">
+    <div class="text-4xl">🔥</div><b class="text-lg">LEVEL SEDANG</b><p class="text-sm text-gray-500">Analisis informasi</p><span class="text-xs font-black text-yellow-700">10 SOAL</span>
+   </button>
+   <button onclick="startQuiz('sulit')" class="card bg-pink-50 text-center hover:border-pink-400">
+    <div class="text-4xl">🚀</div><b class="text-lg">LEVEL SULIT</b><p class="text-sm text-gray-500">Penalaran tingkat tinggi</p><span class="text-xs font-black text-pink-700">10 SOAL</span>
+   </button>
+  </div>
+ </div>
+
+ <div id="quizPlay" class="panel p-5 md:p-7" style="display:none">
+  <div class="flex justify-between flex-wrap gap-3 items-center mb-4">
+   <span id="quizLevelLabel" class="bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-xs font-black"></span>
+   <button onclick="exitQuiz()" class="btn-soft text-xs"> <i class="fa-solid fa-right-from-bracket"></i> Keluar / Ganti Level</button>
+  </div>
+  <div class="flex justify-between text-sm font-bold mb-2">
+   <span id="questionCounter">Soal 1/10</span>
+   <span id="scoreLabel">Skor: 0</span>
+  </div>
+  <div class="progress-track mb-5"><div id="quizProgress" class="progress-fill" style="width:10%"></div></div>
+  <div id="questionText" class="text-lg md:text-xl font-black leading-8 mb-3"></div>
+  <div id="questionOptions"></div>
+  <div id="quizFeedback"></div>
+  <div class="flex justify-end mt-5">
+   <button id="nextQuestion" onclick="nextQuestion()" class="btn-primary" disabled>Selanjutnya <i class="fa-solid fa-arrow-right ml-2"></i></button>
+  </div>
+ </div>
+
+ <div id="quizResult" class="panel p-6 mt-5" style="display:none">
+  <div class="text-center">
+   <div class="text-6xl mb-3">🎉</div>
+   <h3 class="text-2xl font-black">Tantangan Selesai!</h3>
+   <p id="resultMessage" class="text-gray-500 mt-2"></p>
+   <div class="grid grid-cols-3 gap-3 my-6">
+    <div class="bg-purple-50 rounded-2xl p-4"><div id="finalScore" class="text-3xl font-black text-purple-700">0</div><div class="text-xs">Skor</div></div>
+    <div class="bg-green-50 rounded-2xl p-4"><div id="correctCount" class="text-3xl font-black text-green-700">0</div><div class="text-xs">Benar</div></div>
+    <div class="bg-yellow-50 rounded-2xl p-4"><div id="wrongCount" class="text-3xl font-black text-yellow-700">0</div><div class="text-xs">Belum tepat</div></div>
+   </div>
+  </div>
+  <div id="certificateArea" class="certificate rounded-xl">
+   <div class="text-4xl mb-3">🏅</div>
+   <div class="text-purple-700 font-black tracking-widest">SERTIFIKAT PENGHARGAAN</div>
+   <h2 class="text-2xl font-black my-4">APRESIASI LITERASI</h2>
+   <p class="text-sm text-gray-600">Diberikan kepada:</p>
+   <h2 id="certName" class="text-3xl font-black text-purple-700 my-4">Nama Peserta</h2>
+   <p class="text-sm leading-7">Telah menyelesaikan Kuis Interaktif TKA Bahasa Indonesia Kelas IX dengan hasil:</p>
+   <div id="certScore" class="text-4xl font-black text-purple-700 my-3">100</div>
+   <p id="certLevel" class="font-black text-sm"></p>
+   <p class="text-sm mt-5">Teruslah membaca, berpikir kritis, dan berkarya!</p>
+   <div class="border-t border-purple-200 mt-8 pt-4 text-sm">
+    <b>Siti Sundari, M.Pd.</b><br>Pengembang Media Pembelajaran
+   </div>
+  </div>
+  <div class="flex flex-wrap justify-center gap-3 mt-5 no-print">
+   <button onclick="window.print()" class="btn-primary"><i class="fa-solid fa-print mr-2"></i>Cetak Sertifikat</button>
+   <button onclick="exitQuiz()" class="btn-soft">Pilih Level Lain</button>
+   <button onclick="go('games')" class="btn-soft">Main Games</button>
+  </div>
+ </div>
+</section>
+
+<!-- GAMES -->
+<section id="games" class="section">
+ <span class="text-purple-600 font-black text-sm">06 • LITERACY GAME ZONE</span>
+ <h2 class="text-3xl font-black mt-2 mb-2">🎮 Games Detektif Cerita</h2>
+ <p class="text-gray-500 mb-6">Pasangkan peristiwa dengan prediksi dan emosi yang tepat.</p>
+ <div class="panel p-6">
+  <div class="flex justify-between items-center gap-3 mb-4">
+   <h3 class="font-black text-lg">🧩 Game: Pasangkan Petunjuk!</h3>
+   <span id="gameScore" class="bg-yellow-100 px-3 py-2 rounded-xl text-sm font-black">0/5</span>
+  </div>
+  <p class="text-sm text-gray-500 mb-4">Pilih satu kartu peristiwa, lalu pilih pasangan respons atau prediksi yang sesuai. Bisa diklik pada HP.</p>
+  <div id="gameEvents" class="grid sm:grid-cols-2 gap-3"></div>
+  <h4 class="font-black mt-6 mb-3">Pilih pasangan yang tepat:</h4>
+  <div id="gameAnswers" class="grid sm:grid-cols-2 gap-3"></div>
+  <div id="gameFeedback" class="feedback" style="display:none"></div>
+  <button onclick="initGame()" class="btn-primary mt-5">Ulangi Permainan</button>
+ </div>
+</section>
+
+<!-- KESIMPULAN -->
+<section id="kesimpulan" class="section">
+ <span class="text-purple-600 font-black text-sm">07 • KEY TAKEAWAYS</span>
+ <h2 class="text-3xl font-black mt-2 mb-5">📝 Kesimpulan Pembelajaran</h2>
+ <div class="panel p-6">
+  <div class="text-5xl mb-4">🌟</div>
+  <h3 class="text-xl font-black mb-4">Apa yang sudah kita pelajari?</h3>
+  <div class="space-y-4">
+   <div class="bg-purple-50 rounded-2xl p-4"><b>🔮 Memprediksi peristiwa</b><p class="text-sm mt-2 leading-7">Prediksi merupakan perkiraan kelanjutan cerita yang disusun berdasarkan petunjuk, rangkaian peristiwa, dan hubungan sebab-akibat dalam teks.</p></div>
+   <div class="bg-pink-50 rounded-2xl p-4"><b>❤️ Menyimpulkan respons emosional</b><p class="text-sm mt-2 leading-7">Respons emosional tokoh dapat diketahui melalui konflik, dialog, tindakan, ekspresi, dan konteks peristiwa yang dialami.</p></div>
+   <div class="bg-green-50 rounded-2xl p-4"><b>🧠 Menggunakan bukti tekstual</b><p class="text-sm mt-2 leading-7">Jawaban yang baik tidak hanya masuk akal, tetapi harus didukung oleh informasi dalam teks.</p></div>
+  </div>
+  <div class="bg-yellow-50 rounded-2xl p-5 mt-5 text-center">
+   <div class="text-3xl">💡</div>
+   <b class="text-lg">Pesan Hari Ini</b>
+   <p class="text-sm mt-2">Pembaca yang hebat bukan hanya memahami apa yang terjadi, tetapi juga mampu menalar apa yang mungkin terjadi dan memahami perasaan tokoh di balik setiap peristiwa.</p>
+  </div>
+ </div>
+ <button onclick="go('refleksi')" class="btn-primary mt-6">Isi Refleksi Belajar <i class="fa-solid fa-arrow-right ml-2"></i></button>
+</section>
+
+<!-- REFLEKSI -->
+<section id="refleksi" class="section">
+ <span class="text-purple-600 font-black text-sm">08 • COLLABORATIVE REFLECTION</span>
+ <h2 class="text-3xl font-black mt-2 mb-2">💬 Papan Refleksi Kolaboratif</h2>
+ <p class="text-gray-500 mb-6">Bagikan perasaan dan pengalamanmu setelah belajar.</p>
+ <div class="grid lg:grid-cols-5 gap-5">
+  <div class="panel p-5 lg:col-span-2">
+   <h3 class="font-black text-lg mb-4">✍️ Tulis Refleksimu</h3>
+   <label class="text-sm font-bold">Nama siswa</label>
+   <input id="reflectionName" class="w-full p-3 border-2 border-purple-100 rounded-xl mt-2 mb-4" placeholder="Contoh: Shaka / Haflasea">
+   <label class="text-sm font-bold">Bagaimana perasaanmu?</label>
+   <select id="reflectionMood" class="w-full p-3 border-2 border-purple-100 rounded-xl mt-2 mb-4">
+    <option>😊 Senang dan bersemangat</option>
+    <option>🤔 Tertantang untuk berpikir</option>
+    <option>😌 Lebih memahami materi</option>
+    <option>😕 Masih membutuhkan bantuan</option>
+    <option>🌟 Sangat termotivasi</option>
+   </select>
+   <label class="text-sm font-bold">Pesan dan refleksi</label>
+   <textarea id="reflectionMessage" rows="4" class="w-full p-3 border-2 border-purple-100 rounded-xl mt-2 mb-4" placeholder="Hari ini saya belajar bahwa..."></textarea>
+   <button onclick="submitReflection()" class="btn-primary w-full"><i class="fa-solid fa-paper-plane mr-2"></i>Kirim Refleksi</button>
+   <p id="backendStatus" class="text-xs text-gray-400 mt-3">Refleksi dapat disimpan secara lokal atau dikirim ke Google Spreadsheet.</p>
+  </div>
+  <div class="lg:col-span-3">
+   <div class="flex justify-between items-center mb-4">
+    <h3 class="font-black text-lg">📌 Dinding Cerita Kelas</h3>
+    <span class="text-xs bg-purple-100 text-purple-700 px-3 py-2 rounded-full font-black">STICKY NOTES</span>
+   </div>
+   <div id="reflectionWall" class="grid sm:grid-cols-2 gap-4">
+    <div class="sticky-note"><b>Shaka 😊</b><p class="text-sm mt-3">Saya belajar bahwa prediksi harus berdasarkan bukti dalam cerita.</p><small class="text-xs">Contoh refleksi</small></div>
+    <div class="sticky-note"><b>Haflasea 🌟</b><p class="text-sm mt-3">Saya semakin memahami cara mengetahui perasaan tokoh melalui tindakannya.</p><small class="text-xs">Contoh refleksi</small></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+</main>
+
+<footer class="bg-purple-950 text-white mt-10 py-7 text-center">
+ <div class="text-2xl mb-2">📚 ✨ 🧠</div>
+ <b class="text-lg">LITERASI CANGGIH</b>
+ <p class="text-sm text-purple-200 mt-2">Media Pembelajaran Interaktif TKA Bahasa Indonesia Kelas IX</p>
+ <p class="text-sm mt-3">by Siti Sundari, M.Pd.</p>
+ <p class="text-xs text-purple-300 mt-2">Copyright © 2026 • All Rights Reserved</p>
+</footer>
+
+<div id="toast">Berhasil!</div>
+
+<script>
+// ===========================================
+// KONFIGURASI APLIKASI
+// ===========================================
+
+// Isi dengan URL Web App Google Apps Script.
+// Jika kosong, refleksi akan disimpan di localStorage.
+const GOOGLE_SCRIPT_URL = "";
+
+// ===========================================
+// NAVIGASI SPA
+// ===========================================
+function go(page){
+ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+ const target=document.getElementById(page);
+ if(target) target.classList.add('active');
+ document.querySelectorAll('.nav-btn').forEach(b=>{
+  b.classList.toggle('active',b.dataset.page===page);
+ });
+ window.scrollTo({top:0,behavior:'smooth'});
+ sound('click');
+}
+function materialTab(id,btn){
+ document.querySelectorAll('.content-tab').forEach(t=>t.classList.remove('active'));
+ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ btn.classList.add('active');
+ sound('click');
+}
+function toast(message){
+ const t=document.getElementById('toast');
+ t.textContent=message;t.classList.add('show');
+ setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+// ===========================================
+// AUDIO SYNTHESIZER
+// ===========================================
+let audioOn=true;
+let audioContext=null;
+function sound(type){
+ if(!audioOn)return;
+ try{
+  audioContext=audioContext||new(window.AudioContext||window.webkitAudioContext)();
+  if(audioContext.state==='suspended')audioContext.resume();
+  const notes={
+   click:[440,.06],
+   correct:[660,.13],
+   wrong:[190,.18],
+   win:[880,.25]
+  };
+  const [frequency,duration]=notes[type]||notes.click;
+  const osc=audioContext.createOscillator();
+  const gain=audioContext.createGain();
+  osc.type='sine';osc.frequency.value=frequency;
+  gain.gain.setValueAtTime(.09,audioContext.currentTime);
+  gain.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+duration);
+  osc.connect(gain);gain.connect(audioContext.destination);
+  osc.start();osc.stop(audioContext.currentTime+duration);
+ }catch(e){console.log('Audio tidak tersedia',e)}
+}
+function toggleAudio(){
+ audioOn=!audioOn;
+ document.getElementById('audioBtn').innerHTML=audioOn?
+ '<i class="fa-solid fa-volume-high"></i> AUDIO ON':
+ '<i class="fa-solid fa-volume-xmark"></i> AUDIO OFF';
+ if(audioOn)sound('correct');
+}
+function mindful(){
+ toast('Tarik napas... tahan sejenak... lepaskan. 🌿');
+ sound('win');
+}
+
+// ===========================================
+// AKTIVITAS PEMANTIK
+// ===========================================
+function saveWarmup(){
+ const value=document.getElementById('warmup').value.trim();
+ if(!value){toast('Tuliskan jawaban terlebih dahulu.');return}
+ localStorage.setItem('warmupTKA',value);
+ toast('Jawaban pemantik tersimpan! ✨');
+ sound('correct');
+}
+
+// ===========================================
+// SIMULASI PREDIKSI
+// ===========================================
+function simulate(choice){
+ const result=document.getElementById('simulationResult');
+ const data=[
+  ['Kurang tepat. Membongkar kotak dengan paksa dapat merusak benda dan mengabaikan petunjuk yang tersedia.','wrong'],
+  ['Tepat! Dinda menggunakan foto sebagai petunjuk. Tindakan ini paling logis karena tulisan pada kotak meminta semua petunjuk ditemukan terlebih dahulu.','correct'],
+  ['Kurang tepat. Dinda mengabaikan misteri dan petunjuk yang ditemukan.','wrong'],
+  ['Kurang tepat. Membawa barang tanpa izin bukan tindakan yang bertanggung jawab.','wrong']
+ ];
+ const icon=data[choice][1]==='correct'?'🌟':'💡';
+ result.innerHTML=`<div class="feedback"><b>${icon} ${data[choice][0]}</b><p class="text-sm mt-2">Coba jelaskan bukti dalam teks yang mendukung pilihan tersebut.</p></div>`;
+ sound(data[choice][1]);
+}
+function resetSimulation(){
+ document.getElementById('simulationResult').innerHTML='';
+ document.getElementById('experimentResult').innerHTML='';
+}
+function experiment(){
+ const value=document.getElementById('eventSelect').value;
+ const results={
+  berhasil:'😊 Senang atau lega. Keberhasilan membuat tujuan tokoh tercapai.',
+  gagal:'😔 Kecewa atau sedih. Usaha yang dilakukan belum menghasilkan sesuai harapan.',
+  ditolong:'🥹 Terharu atau bersyukur. Tokoh menerima bantuan dari orang lain.',
+  dituduh:'😠 Marah, sedih, atau kecewa. Tokoh merasa diperlakukan tidak adil.'
+ };
+ document.getElementById('experimentResult').innerHTML=`<div class="feedback"><b>Hasil analisis:</b><p class="mt-2">${results[value]}</p><p class="text-xs mt-2">Ingat: konteks dan petunjuk tambahan dapat mengubah emosi yang paling dominan.</p></div>`;
+ sound('correct');
+}
+
+// ===========================================
+// BANK SOAL TKA - 3 LEVEL x 10 SOAL
+// ===========================================
+const questions={
+ mudah:[
+  {text:'Rani melihat langit semakin gelap. Angin bertiup kencang. Ia segera memasukkan pakaian yang dijemur ke dalam rumah. Apa yang paling mungkin terjadi?',o:['Hujan akan turun','Cuaca menjadi sangat panas','Matahari semakin terik','Angin berhenti selamanya'],a:0,e:'Langit gelap dan angin kencang merupakan petunjuk kemungkinan turunnya hujan. Tindakan Rani menunjukkan ia mengantisipasi hujan.'},
+  {text:'Budi kehilangan kucing kesayangannya. Ia mencari ke seluruh rumah dan matanya berkaca-kaca. Bagaimana perasaan Budi?',o:['Bangga','Sedih dan khawatir','Marah kepada guru','Gembira'],a:1,e:'Kehilangan hewan kesayangan dan mata berkaca-kaca menunjukkan kesedihan serta kekhawatiran.'},
+  {text:'Sinta telah berlatih setiap sore untuk lomba membaca puisi. Hari ini ia berdiri di panggung dengan percaya diri. Apa prediksi paling logis?',o:['Ia akan mengikuti lomba membaca puisi','Ia akan membatalkan sekolah','Ia akan merusak panggung','Ia akan pergi berenang'],a:0,e:'Latihan dan keberadaannya di panggung menunjukkan ia bersiap mengikuti lomba.'},
+  {text:'Doni mendapat hadiah ulang tahun yang sudah lama diinginkan. Ia tersenyum lebar dan melompat kegirangan. Emosi Doni adalah...',o:['Kecewa','Takut','Senang','Marah'],a:2,e:'Senyum lebar dan melompat kegirangan merupakan petunjuk kebahagiaan.'},
+  {text:'Jalan menuju sekolah tergenang air setelah hujan deras. Apa kemungkinan yang terjadi?',o:['Perjalanan ke sekolah dapat terhambat','Jalan menjadi kering seketika','Tidak ada kendaraan yang bergerak selamanya','Semua sekolah ditutup permanen'],a:0,e:'Genangan air dapat menghambat perjalanan, tetapi tidak otomatis berarti sekolah ditutup.'},
+  {text:'Lina menemukan nilai ujiannya jauh di bawah target. Ia terdiam dan menyimpan kertas ujian. Perasaan yang mungkin dialami Lina adalah...',o:['Kecewa','Bangga','Lega','Gembira'],a:0,e:'Hasil ujian di bawah target dapat menimbulkan kekecewaan.'},
+  {text:'Ayah berjanji akan mengajak Riko ke kebun binatang jika ia menyelesaikan tugas. Riko telah menyelesaikan tugasnya. Apa kemungkinan selanjutnya?',o:['Ayah mempertimbangkan menepati janji','Riko membuang tugas','Kebun binatang menghilang','Riko berhenti belajar selamanya'],a:0,e:'Janji dan tugas yang selesai menjadi petunjuk bahwa mereka mungkin pergi ke kebun binatang.'},
+  {text:'Mira mendengar suara langkah di belakangnya saat berjalan sendirian di tempat gelap. Ia mempercepat langkah. Perasaan Mira mungkin...',o:['Takut','Bangga','Lega','Jengkel karena lapar'],a:0,e:'Tempat gelap dan suara langkah yang tidak dikenal dapat memicu rasa takut.'},
+  {text:'Tono melihat temannya kesulitan membawa banyak buku. Ia segera membantu. Apa yang dapat disimpulkan tentang Tono?',o:['Peduli terhadap teman','Tidak suka membaca','Sedang marah','Tidak mau berteman'],a:0,e:'Tindakan membantu menunjukkan kepedulian dan sikap suka menolong.'},
+  {text:'Sebuah tanaman layu karena tidak disiram selama beberapa hari. Jika terus dibiarkan, tanaman kemungkinan...',o:['Semakin segar','Dapat mati','Berbuah lebat seketika','Berubah menjadi batu'],a:1,e:'Kekurangan air yang berkelanjutan dapat menyebabkan tanaman mati.'}
+ ],
+ sedang:[
+  {text:'Sejak pagi, Naya berulang kali memeriksa ponselnya. Ia menunggu pengumuman beasiswa yang menentukan kelanjutan studinya. Ketika pesan masuk, ia menarik napas panjang sebelum membukanya. Apa prediksi paling logis?',o:['Naya akan membaca pengumuman dengan perasaan tegang','Naya akan langsung membuang ponsel','Naya tidak peduli pada hasilnya','Naya akan meninggalkan sekolah'],a:0,e:'Kebiasaan memeriksa ponsel dan menarik napas menunjukkan penantian penuh ketegangan. Ia kemungkinan segera membaca hasilnya.'},
+  {text:'Rafi dituduh merusakkan alat laboratorium, padahal ia melihat sendiri orang lain yang melakukannya. Ia mencoba menjelaskan, tetapi tidak didengarkan. Respons emosional paling mungkin adalah...',o:['Puas dan bangga','Kecewa dan frustrasi','Senang dan santai','Tidak peduli sama sekali'],a:1,e:'Dituduh secara keliru dan tidak didengarkan merupakan situasi yang dapat menimbulkan kecewa dan frustrasi.'},
+  {text:'Dalam cerita, seorang tokoh menyimpan peta, menyiapkan bekal, dan berpamitan kepada keluarganya sebelum fajar. Prediksi paling kuat adalah...',o:['Tokoh sedang merencanakan perjalanan','Tokoh akan tidur sepanjang hari','Tokoh akan membuang peta','Tokoh sedang mengadakan pesta'],a:0,e:'Peta, bekal, dan pamitan sebelum fajar merupakan rangkaian petunjuk persiapan perjalanan.'},
+  {text:'Dewi memenangkan lomba setelah berkali-kali gagal. Ia tidak langsung bersorak, tetapi memeluk pelatihnya sambil menangis. Emosi yang paling mungkin adalah...',o:['Terharu dan bahagia','Takut kepada pelatih','Marah karena menang','Kecewa terhadap hasil'],a:0,e:'Tangisan setelah keberhasilan dan pelukan kepada pelatih menunjukkan kebahagiaan serta rasa terharu.'},
+  {text:'Seorang tokoh menemukan pintu rumah terbuka, padahal ia yakin telah menguncinya. Lampu di ruang tengah menyala. Apa simpulan yang paling berhati-hati?',o:['Ada kemungkinan seseorang berada di dalam rumah','Rumah pasti telah terbakar','Semua penghuni sedang tidur','Tokoh pasti kehilangan rumah'],a:0,e:'Pintu terbuka dan lampu menyala menjadi petunjuk adanya kemungkinan seseorang berada di dalam, tetapi belum membuktikannya.'},
+  {text:'Maya menerima pesan bahwa sahabatnya pindah sekolah tanpa sempat berpamitan. Ia membaca pesan berulang kali dan memandang bangku kosong di sebelahnya. Respons emosionalnya adalah...',o:['Kehilangan dan sedih','Bangga dan puas','Marah karena menang lomba','Takut pada hujan'],a:0,e:'Bangku kosong dan membaca pesan berulang kali menunjukkan kesedihan karena berpisah.'},
+  {text:'Dalam cerita, seorang pedagang terus menurunkan harga meskipun pembeli belum menawar. Ia terlihat gelisah dan beberapa kali melihat jam. Apa kemungkinan situasinya?',o:['Ia ingin segera menyelesaikan penjualan','Ia sedang merayakan ulang tahun','Ia tidak ingin menjual barang','Ia sedang menunggu hujan'],a:0,e:'Menurunkan harga dan melihat jam dapat menjadi petunjuk bahwa pedagang ingin segera menyelesaikan transaksi.'},
+  {text:'Arman menemukan dompet berisi identitas dan sejumlah uang di halte. Ia memutuskan menyerahkannya kepada petugas. Karakter Arman yang paling terlihat adalah...',o:['Jujur dan bertanggung jawab','Ceroboh dan pemarah','Sombong dan egois','Pengecut dan malas'],a:0,e:'Menyerahkan barang temuan kepada petugas menunjukkan kejujuran dan tanggung jawab.'},
+  {text:'Seorang tokoh berkali-kali mengetuk pintu rumah temannya. Tidak ada jawaban, tetapi dari dalam terdengar suara benda jatuh. Apa tindakan paling masuk akal?',o:['Memastikan kondisi penghuni dan meminta bantuan bila perlu','Langsung pergi tanpa peduli','Melempar batu ke jendela','Menganggap rumah itu kosong tanpa pemeriksaan'],a:0,e:'Suara benda jatuh dapat mengindikasikan sesuatu terjadi. Memastikan keselamatan penghuni merupakan tindakan yang masuk akal.'},
+  {text:'Sebelum pertandingan, kapten tim melihat beberapa pemainnya saling menyalahkan. Ia lalu mengumpulkan mereka dan mengajak berdiskusi. Prediksi paling logis adalah...',o:['Ia berusaha memulihkan kerja sama tim','Ia ingin membubarkan pertandingan','Ia akan meninggalkan semua pemain','Ia ingin memperbesar konflik'],a:0,e:'Mengumpulkan tim untuk berdiskusi menunjukkan upaya memperbaiki komunikasi dan kerja sama.'}
+ ],
+ sulit:[
+  {text:'Bacalah: "Ketika lonceng berbunyi, Laras masih berdiri di depan ruang arsip. Di tangannya ada daftar nama yang sebagian telah dicoret. Ia menatap pintu yang terkunci, lalu menyelipkan secarik kertas ke bawahnya. Esok pagi, ia berencana datang lebih awal." Prediksi yang paling didukung teks adalah...',o:['Laras akan melanjutkan upaya memperoleh atau menyampaikan informasi dari ruang arsip','Laras akan pindah rumah malam itu','Laras telah menyelesaikan seluruh pekerjaannya','Laras tidak lagi tertarik pada daftar nama'],a:0,e:'Daftar nama, pintu arsip terkunci, kertas yang diselipkan, dan rencana datang lebih awal mengisyaratkan urusan di ruang arsip belum selesai.'},
+  {text:'Seorang tokoh mengetahui bahwa keberhasilannya diperoleh dari kesalahan perhitungan orang lain. Ia memandang piala, lalu berkata, "Seharusnya bukan aku yang berdiri di sini." Respons emosional paling tepat adalah...',o:['Bangga tanpa keraguan','Gelisah dan merasa bersalah','Gembira karena dipuji','Marah karena tidak menang'],a:1,e:'Pernyataan bahwa dirinya tidak seharusnya menerima piala menunjukkan kegelisahan dan rasa bersalah atas keberhasilan yang tidak sepenuhnya layak.'},
+  {text:'Dalam cerita, seorang anak terus menolak tawaran bantuan, tetapi diam-diam menyimpan nomor telepon orang yang menawarkannya. Prediksi yang paling masuk akal adalah...',o:['Ia mungkin mempertimbangkan meminta bantuan ketika merasa siap','Ia pasti tidak membutuhkan siapa pun','Ia akan menghapus seluruh kontaknya','Ia sudah berhasil menyelesaikan semua masalah'],a:0,e:'Penolakan disertai penyimpanan nomor menunjukkan konflik batin: ia belum siap menerima bantuan, tetapi membuka kemungkinan menghubungi orang tersebut.'},
+  {text:'Bacalah: "Ibu tidak mengatakan apa-apa ketika melihat piring pecah. Ia hanya mengumpulkan serpihannya, sementara tangannya sedikit gemetar. Anak itu berdiri di ambang pintu dan tidak berani mendekat." Simpulan yang paling kuat adalah...',o:['Ibu mungkin sedang menahan emosi, sementara anak merasa takut atau bersalah','Ibu pasti sedang tertawa','Anak merasa bangga telah memecahkan piring','Tidak ada konflik dalam peristiwa tersebut'],a:0,e:'Tangan gemetar dan diam dapat mengisyaratkan emosi yang tertahan. Sikap anak yang tidak berani mendekat menunjukkan rasa takut atau bersalah.'},
+  {text:'Tokoh utama memperoleh dua informasi yang bertentangan tentang sahabatnya. Ia tidak langsung menuduh, tetapi mencari sumber informasi pertama dan kedua. Sikap tersebut menunjukkan...',o:['Penalaran kritis sebelum menarik kesimpulan','Ketidakmampuan memahami masalah','Keinginan memperbesar pertengkaran','Ketakutan terhadap semua orang'],a:0,e:'Memeriksa sumber sebelum menyimpulkan menunjukkan sikap kritis dan kehati-hatian dalam menilai informasi.'},
+  {text:'"Ia tersenyum ketika semua orang bertepuk tangan. Namun, setelah ruangan kosong, ia memandang kursi ayahnya yang tidak terisi." Interpretasi emosi paling tepat adalah...',o:['Kebahagiaannya mungkin bercampur dengan kesedihan karena ayahnya tidak hadir','Ia sepenuhnya marah kepada penonton','Ia tidak memahami keberhasilan','Ia pasti kecewa terhadap seluruh prestasinya'],a:0,e:'Tepuk tangan menunjukkan kebahagiaan, sedangkan kursi kosong ayah menunjukkan kerinduan atau kesedihan. Emosi dapat bersifat kompleks.'},
+  {text:'Sebuah cerita menggambarkan sungai yang semakin dangkal, ikan-ikan yang mulai menghilang, dan warga yang mengurangi penggunaan air. Prediksi yang paling logis adalah...',o:['Warga akan menghadapi persoalan ketersediaan air dan ekosistem sungai','Sungai akan bertambah dalam tanpa sebab','Jumlah ikan akan meningkat secara otomatis','Warga tidak akan terpengaruh keadaan sungai'],a:0,e:'Rangkaian petunjuk menunjukkan penurunan kualitas atau kuantitas air yang berpotensi berdampak pada warga dan ekosistem.'},
+  {text:'Seorang tokoh menemukan surat lama yang mengungkap alasan sahabatnya pergi bertahun-tahun lalu. Ia membaca bagian akhir berkali-kali, kemudian mengambil jaket dan keluar rumah. Prediksi paling masuk akal adalah...',o:['Ia akan berusaha menemui atau mencari sahabatnya','Ia akan membakar semua surat tanpa membacanya','Ia akan melupakan isi surat seketika','Ia akan mengadakan pesta'],a:0,e:'Surat yang mengungkap alasan kepergian dan tindakan mengambil jaket menunjukkan kemungkinan ia hendak mencari sahabatnya.'},
+  {text:'Dalam sebuah konflik, tokoh A meminta maaf, tetapi tokoh B tetap diam dan menjauh. Simpulan paling tepat adalah...',o:['Permintaan maaf belum tentu langsung memulihkan kepercayaan tokoh B','Tokoh B pasti sudah memaafkan sepenuhnya','Tokoh A tidak pernah meminta maaf','Konflik pasti selesai saat itu juga'],a:0,e:'Diam dan menjauh dapat menunjukkan luka emosional atau ketidakpercayaan yang belum pulih. Permintaan maaf tidak otomatis menyelesaikan konflik.'},
+  {text:'Bacalah: "Sebelum menyerahkan naskah, Raka menghapus satu paragraf yang paling ia sukai. Ia tahu paragraf itu indah, tetapi tidak mendukung gagasan utama. Ia menutup laptop dengan napas lega." Karakter Raka yang paling menonjol adalah...',o:['Mampu mengambil keputusan berdasarkan relevansi dan tujuan','Selalu mengikuti perasaan tanpa pertimbangan','Tidak menghargai tulisannya sendiri','Takut menyampaikan gagasan'],a:0,e:'Menghapus bagian yang disukai karena tidak relevan menunjukkan kemampuan mengevaluasi dan mengambil keputusan secara objektif.'}
+ ]
+};
+
+let quizState={level:'',index:0,score:0,correct:0,wrong:0,answered:false,name:''};
+
+function startQuiz(level){
+ const name=document.getElementById('studentName').value.trim();
+ if(!name){toast('Isi nama terlebih dahulu untuk sertifikat.');return}
+ quizState={level,index:0,score:0,correct:0,wrong:0,answered:false,name};
+ document.getElementById('quizStart').style.display='none';
+ document.getElementById('quizResult').style.display='none';
+ document.getElementById('quizPlay').style.display='block';
+ document.getElementById('quizLevelLabel').textContent='LEVEL '+level.toUpperCase();
+ renderQuestion();
+ sound('click');
+}
+function renderQuestion(){
+ const q=questions[quizState.level][quizState.index];
+ quizState.answered=false;
+ document.getElementById('questionCounter').textContent=`Soal ${quizState.index+1}/10`;
+ document.getElementById('scoreLabel').textContent='Skor: '+quizState.score;
+ document.getElementById('quizProgress').style.width=((quizState.index+1)*10)+'%';
+ document.getElementById('questionText').textContent=q.text;
+ document.getElementById('quizFeedback').innerHTML='';
+ document.getElementById('nextQuestion').disabled=true;
+ document.getElementById('nextQuestion').textContent=quizState.index===9?'Lihat Hasil':'Selanjutnya →';
+ const labels=['A','B','C','D'];
+ document.getElementById('questionOptions').innerHTML=q.o.map((opt,i)=>`
+ <button class="answer-option quiz-choice" onclick="answerQuestion(${i})" id="opt${i}">
+ <span class="option-letter">${labels[i]}</span><span>${opt}</span></button>
+ `).join('');
+}
+function answerQuestion(index){
+ if(quizState.answered)return;
+ quizState.answered=true;
+ const q=questions[quizState.level][quizState.index];
+ const correct=index===q.a;
+ if(correct){quizState.correct++;quizState.score+=10;sound('correct')}
+ else{quizState.wrong++;sound('wrong')}
+ q.o.forEach((_,i)=>{
+  const btn=document.getElementById('opt'+i);
+  btn.disabled=true;
+  if(i===q.a)btn.classList.add('correct');
+  else if(i===index)btn.classList.add('wrong');
+ });
+ const explanation=correct?
+ '<b>🌟 Tepat sekali!</b>':
+ '<b>💡 Belum tepat. Jawaban yang benar: '+q.o[q.a]+'</b>';
+ document.getElementById('quizFeedback').innerHTML=
+ `<div class="feedback">${explanation}<p class="text-sm mt-2">${q.e}</p></div>`;
+ document.getElementById('scoreLabel').textContent='Skor: '+quizState.score;
+ document.getElementById('nextQuestion').disabled=false;
+}
+function nextQuestion(){
+ if(!quizState.answered)return;
+ if(quizState.index<9){quizState.index++;renderQuestion()}
+ else{finishQuiz()}
+ sound('click');
+}
+function finishQuiz(){
+ document.getElementById('quizPlay').style.display='none';
+ document.getElementById('quizResult').style.display='block';
+ const score=quizState.score;
+ document.getElementById('finalScore').textContent=score;
+ document.getElementById('correctCount').textContent=quizState.correct;
+ document.getElementById('wrongCount').textContent=quizState.wrong;
+ document.getElementById('resultMessage').textContent=
+ score>=80?'Luar biasa! Kamu memiliki kemampuan literasi yang sangat baik.':
+ score>=60?'Bagus! Terus latih kemampuan membaca dan menalar.':
+ 'Tetap semangat! Pelajari kembali materi dan coba lagi.';
+ document.getElementById('certName').textContent=quizState.name;
+ document.getElementById('certScore').textContent=score;
+ document.getElementById('certLevel').textContent='LEVEL '+quizState.level.toUpperCase();
+ if(window.confetti){
+  confetti({particleCount:150,spread:100,origin:{y:.65}});
+  setTimeout(()=>confetti({particleCount:80,spread:120,origin:{y:.6}}),400);
+ }
+ sound('win');
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function exitQuiz(){
+ document.getElementById('quizPlay').style.display='none';
+ document.getElementById('quizResult').style.display='none';
+ document.getElementById('quizStart').style.display='block';
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ===========================================
+// GAMES - MATCHING
+// ===========================================
+const gameData=[
+ {event:'Tokoh gagal memperoleh beasiswa yang sangat diharapkan.',answer:'Merasa kecewa karena harapannya belum tercapai.'},
+ {event:'Tokoh melihat sahabatnya berhasil setelah berjuang lama.',answer:'Merasa bahagia dan bangga atas keberhasilan sahabat.'},
+ {event:'Tokoh mendengar suara mencurigakan dari ruang gelap.',answer:'Merasa takut atau waspada terhadap kemungkinan bahaya.'},
+ {event:'Tokoh menemukan dompet dan mengembalikannya kepada pemilik.',answer:'Menunjukkan kejujuran dan tanggung jawab.'},
+ {event:'Tokoh melihat teman terjatuh dan segera menolongnya.',answer:'Menunjukkan empati dan kepedulian.'}
+];
+let selectedEvent=null,matched=new Set();
+function initGame(){
+ selectedEvent=null;matched=new Set();
+ document.getElementById('gameScore').textContent='0/5';
+ document.getElementById('gameFeedback').style.display='none';
+ document.getElementById('gameEvents').innerHTML=gameData.map((x,i)=>
+ `<button id="event${i}" class="answer-option" onclick="selectEvent(${i})"><span class="option-letter">${i+1}</span><span>${x.event}</span></button>`).join('');
+ const shuffled=[...gameData.keys()].sort(()=>Math.random()-.5);
+ document.getElementById('gameAnswers').innerHTML=shuffled.map(i=>
+ `<button id="answer${i}" class="answer-option" onclick="selectAnswer(${i})"><span class="option-letter">💡</span><span>${gameData[i].answer}</span></button>`).join('');
+}
+function selectEvent(i){
+ if(matched.has(i))return;
+ selectedEvent=i;
+ document.querySelectorAll('#gameEvents button').forEach(b=>b.style.borderColor='#eee9f7');
+ document.getElementById('event'+i).style.borderColor='#8066d9';
+ sound('click');
+}
+function selectAnswer(i){
+ if(selectedEvent===null){toast('Pilih kartu peristiwa terlebih dahulu.');return}
+ if(matched.has(selectedEvent))return;
+ const feedback=document.getElementById('gameFeedback');
+ if(selectedEvent===i){
+  matched.add(i);
+  document.getElementById('event'+i).disabled=true;
+  document.getElementById('answer'+i).disabled=true;
+  document.getElementById('event'+i).classList.add('correct');
+  document.getElementById('answer'+i).classList.add('correct');
+  feedback.style.display='block';
+  feedback.textContent='🌟 Tepat! Kamu berhasil menghubungkan peristiwa dengan respons yang sesuai.';
+  sound('correct');
+ }else{
+  feedback.style.display='block';
+  feedback.textContent='💡 Belum tepat. Perhatikan kembali hubungan peristiwa dan responsnya.';
+  document.getElementById('answer'+i).classList.add('wrong');
+  setTimeout(()=>document.getElementById('answer'+i)?.classList.remove('wrong'),650);
+  sound('wrong');
+ }
+ document.getElementById('gameScore').textContent=matched.size+'/5';
+ selectedEvent=null;
+ if(matched.size===5){
+  feedback.textContent='🎉 Hebat! Semua pasangan benar. Kamu berhasil menyelesaikan tantangan!';
+  if(window.confetti)confetti({particleCount:120,spread:90});
+  sound('win');
+ }
+}
+initGame();
+
+// ===========================================
+// PAPAN REFLEKSI DAN BACKEND SPREADSHEET
+// ===========================================
+function escapeHTML(str){
+ return String(str).replace(/[&<>"']/g,c=>({
+ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+ })[c]);
+}
+function renderReflections(){
+ let entries=[];
+ try{entries=JSON.parse(localStorage.getItem('reflectionsTKA')||'[]')}catch(e){}
+ const wall=document.getElementById('reflectionWall');
+ wall.innerHTML='';
+ const samples=[
+  {name:'Shaka',mood:'😊 Senang dan bersemangat',message:'Saya belajar bahwa prediksi harus berdasarkan bukti dalam cerita.'},
+  {name:'Haflasea',mood:'🌟 Sangat termotivasi',message:'Saya semakin memahami cara mengetahui perasaan tokoh melalui tindakannya.'}
+ ];
+ [...samples,...entries].forEach(x=>{
+  const note=document.createElement('div');
+  note.className='sticky-note';
+  const name=document.createElement('b');
+  name.textContent=x.name+' '+x.mood.split(' ')[0];
+  const message=document.createElement('p');
+  message.className='text-sm mt-3';
+  message.textContent=x.message;
+  const small=document.createElement('small');
+  small.className='text-xs';
+  small.textContent='Refleksi pembelajaran';
+  note.append(name,message,small);
+  wall.appendChild(note);
+ });
+}
+async function submitReflection(){
+ const name=document.getElementById('reflectionName').value.trim();
+ const mood=document.getElementById('reflectionMood').value;
+ const message=document.getElementById('reflectionMessage').value.trim();
+ if(!name||!message){toast('Nama dan pesan refleksi wajib diisi.');return}
+ const entry={name,mood,message,date:new Date().toLocaleString('id-ID')};
+ let entries=[];
+ try{entries=JSON.parse(localStorage.getItem('reflectionsTKA')||'[]')}catch(e){}
+ entries.push(entry);
+ localStorage.setItem('reflectionsTKA',JSON.stringify(entries));
+ renderReflections();
+ document.getElementById('reflectionMessage').value='';
+ document.getElementById('backendStatus').textContent='Refleksi tersimpan di perangkat.';
+ toast('Refleksi berhasil ditambahkan! 💜');
+ sound('correct');
+
+ if(GOOGLE_SCRIPT_URL){
+  try{
+   const response=await fetch(GOOGLE_SCRIPT_URL,{
+    method:'POST',
+    mode:'no-cors',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify(entry)
+   });
+   document.getElementById('backendStatus').textContent='Refleksi dikirim ke Google Spreadsheet. Salinan lokal juga tersedia.';
+  }catch(error){
+   document.getElementById('backendStatus').textContent='Pengiriman gagal. Refleksi tetap tersimpan secara lokal.';
+  }
+ }
+}
+renderReflections();
+</script>
+
+</body>
+</html>
